@@ -29,6 +29,6 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         run: |
-          ls
+          cd src/flask_app
           gunicorn --bind 0.0.0.0:5000 app:app &
           pytest
