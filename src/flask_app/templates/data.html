@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<body style="font-family:arial, sans-serif">
+    <h1>{{header}}</h1>
+    <h6><a href="/">Return to index page</a></h6>
+    <div id="line_plot" class="chart"></div>
+    <div id="scatter_plot" class="chart"></div>
+    <div>{{description}}</div>
+</body>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript">
+    var line = {{graph_json_line | safe}};
+    Plotly.plot('line_plot',line,{});
+    var scatter = {{graph_json_scatter | safe}};
+    Plotly.plot('scatter_plot',scatter,{});      
+</script>
+</html>
