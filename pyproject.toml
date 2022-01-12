@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "flask_app"
+name = "src"
 version = "0.1.0"
 description = "A demo Flask app."
 authors = ["Zachary Braun <zacharytbraun@gmail.com>"]
