@@ -36,6 +36,7 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -y install podman buildah
           sudo pip install podman-compose
+          printf "[registries.search]\nregistries = ['docker.io']" > registries.conf
       - name: Build Docker image from Dockerfile
         run: |
           poetry export -f requirements.txt --output requirements.txt

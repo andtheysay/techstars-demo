@@ -3,15 +3,16 @@ FROM python:3.8-slim
 
 LABEL maintainer="zacharytbraun@gmail.com"
 
-# Get the wheel file to install app
-ADD src/dist/flask_app-0.1.0-py3-none-any.whl ./
+
+COPY requirements.txt requirements.txt
 
 # Install the required Python packages
-RUN pip install --no-cache-dir pip --upgrade && pip install --no-cache-dir *.whl && \
+RUN pip install --upgrade pip && pip install -r requirements.txt && \
     # Clean up
-    rm flask_app-0.1.0-py3-none-any.whl && \
-    # Add a new user to run the app process instead of root to increase security
-    useradd app
+    rm requirements.txt
+
+# Add a new user to run the app process instead of root to increase security
+RUN useradd app
 
 # Switch to user "app" to run the app process
 USER app
@@ -21,6 +22,6 @@ USER app
 ADD --chown=app http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite data/cdeschools.sqlite
 
 # Copy the source code to the container
-COPY --chown=app src/flask_app ./
+COPY --chown=app src/ ./
 
 CMD [ "gunicorn", "--bind", "0.0.0.0:5000", "app:app" ]
