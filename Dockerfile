@@ -17,7 +17,8 @@ RUN pip install --no-cache-dir pip --upgrade && pip install --no-cache-dir *.whl
 USER app
 
 # Get the dataset (dataset originally from http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite)
-ADD --chown=app https://drive.google.com/file/d/1d2vwG2eETdiRB-UWumVLW25efzmU-8Sd/view?usp=sharing data/cdeschools.sqlite
+# https://drive.google.com/file/d/1d2vwG2eETdiRB-UWumVLW25efzmU-8Sd/view?usp=sharing
+ADD --chown=app http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite data/cdeschools.sqlite
 
 # Copy the source code to the container
 COPY --chown=app src/flask_app ./
