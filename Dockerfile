@@ -17,8 +17,9 @@ RUN useradd app
 # Switch to user "app" to run the app process
 USER app
 
-# Get the dataset (dataset originally from http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite)
-# https://drive.google.com/file/d/1d2vwG2eETdiRB-UWumVLW25efzmU-8Sd/view?usp=sharing
+WORKDIR /home/app
+
+# Get the dataset
 ADD --chown=app http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite data/cdeschools.sqlite
 
 # Copy the source code to the container
