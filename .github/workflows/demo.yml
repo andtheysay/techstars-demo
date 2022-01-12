@@ -15,20 +15,37 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install poetry
           poetry config virtualenvs.create false
           if [ -f pyproject.toml ]; then poetry install ; fi
-      - name: Lint with flake8
+      - name: flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
+      - name: Test Flask App
         run: |
-          cd src/flask_app
-          gunicorn --bind 0.0.0.0:5000 app:app &
+          gunicorn --bind 0.0.0.0:5000 --chdir src app:app &
           pytest
+      - name: Install Docker dependencies (podman and buildah)
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install podman buildah
+          sudo pip install podman-compose
+      - name: Build Docker image from Dockerfile
+        run: |
+          poetry export -f requirements.txt --output requirements.txt
+          buildah bud -t techstars-demo
+      - name: Test Docker image
+        run: |
+          podman run -d 5000:5000 techstars-demo
+          pytest
+      - name: Push Docker image to Github Container Registry
+        run: |
+          buildah push techstars-demo docker.pkg.github.com/techstars/techstars-demo/techstars-demo:latest
+
+         
