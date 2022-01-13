@@ -44,7 +44,7 @@ jobs:
           buildah bud -t techstars-demo
       - name: Test Docker image
         run: |
-          podman run -d techstars-demo 5000:5000
+          podman run -d techstars-demo -p 5000:5000
           pytest
       - name: Push Docker image to Github Container Registry
         run: |
