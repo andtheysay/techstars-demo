@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
         env:
-          GH_TOKEN: ${{ registry.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.ACTIONSTECHSTARS }}
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
