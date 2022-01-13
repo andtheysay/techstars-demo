@@ -32,6 +32,7 @@ jobs:
           mv data/cdeschools.sqlite.z src/cdeschools.sqlite
           gunicorn --bind 127.0.0.1:5000 --chdir src app:app &
           pytest
+          killall gunicorn
       - name: Install Docker dependencies (podman and buildah)
         run: |
           sudo apt-get -y update
@@ -46,6 +47,7 @@ jobs:
         run: |
           podman run -d -p 5000:5000 techstars-demo
           pytest
+          podman kill -a
       - name: Push Docker image to Github Container Registry
         run: |
           buildah push techstars-demo docker.pkg.github.com/andtheysay/techstars-demo/techstars-demo:latest
