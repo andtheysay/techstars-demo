@@ -14,8 +14,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-        env:
-          GH_TOKEN: ${{ secrets.ACTIONSTECHSTARS }}
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -50,6 +48,8 @@ jobs:
           pytest
           podman kill -a
       - name: Push Docker image to Github Container Registry
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONSTECHSTARS }}
         run: |
           buildah login -u andtheysay -p $GH_TOKEN ghcr.io
           buildah push techstars-demo ghcr.io/andtheysay/techstars-demo/techstars-demo:latest
