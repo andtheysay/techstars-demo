@@ -50,6 +50,6 @@ jobs:
           podman kill -a
       - name: Push Docker image to Github Container Registry
         run: |
-          buildah login -u andtheysay -p $GH_TOKEN docker.pkg.github.com
-          buildah push techstars-demo docker.pkg.github.com/andtheysay/techstars-demo/techstars-demo:latest
+          buildah login -u andtheysay -p $GH_TOKEN ghcr.io
+          buildah push techstars-demo ghcr.io/andtheysay/techstars-demo/techstars-demo:latest
          
