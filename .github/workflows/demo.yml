@@ -8,7 +8,8 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8, 3.9]
-
+      env:
+        GH_TOKEN: ${{ registry.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -49,8 +50,6 @@ jobs:
           pytest
           podman kill -a
       - name: Push Docker image to Github Container Registry
-        env:
-            GH_TOKEN: ${{ registry.GH_TOKEN }}
         run: |
           buildah login -u andtheysay -p $GH_TOKEN ghcr.io
           buildah push techstars-demo ghcr.io/andtheysay/techstars-demo/techstars-demo:latest
