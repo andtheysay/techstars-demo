@@ -29,7 +29,8 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test Flask App
         run: |
-          gunicorn --bind 0.0.0.0:5000 --chdir src app:app &
+          mv data/cdeschools.sqlite.z src/cdeschools.sqlite
+          gunicorn --bind 127.0.0.1:5000 --chdir src app:app &
           pytest
       - name: Install Docker dependencies (podman and buildah)
         run: |
@@ -48,5 +49,4 @@ jobs:
       - name: Push Docker image to Github Container Registry
         run: |
           buildah push techstars-demo docker.pkg.github.com/techstars/techstars-demo/techstars-demo:latest
-
          

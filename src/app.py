@@ -15,7 +15,7 @@ query = """SELECT schools.*, satscores.NumTstTakr, satscores.AvgScrMath, satscor
         LEFT JOIN frpm ON frpm."County Name"=schools.County AND frpm."District Name"=schools.District AND frpm."School Name"=schools.School
         WHERE satscores.NumTstTakr IS NOT NULL AND schools.LastUpdate >= '2010-01-01'"""
 # Connect to the sqlite db
-conn = connect('data/cdeschools.sqlite')
+conn = connect('cdeschools.sqlite')
 # Read the result of the above query into a dataframe using the above connection
 df = pd.read_sql(query, conn)
 # Close the sql connection as it is not used anymore
