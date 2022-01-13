@@ -19,10 +19,9 @@ USER app
 
 WORKDIR /home/app
 
-# Get the dataset
-ADD --chown=app http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite data/cdeschools.sqlite
-
 # Copy the source code to the container
-COPY --chown=app src/ ./
+COPY --chown=app src/ ./src
+# Copy the dataset to the container (dataset originally from http://2016.padjo.org/files/data/starterpack/cde-schools/cdeschools.sqlite)
+COPY --chown=app data/cdeschools.sqlite.z ./src/data/cdeschools.sqlite
 
-CMD [ "gunicorn", "--bind", "0.0.0.0:5000", "app:app" ]
+CMD [ "gunicorn", "--chdir", "/home/app/src", "--bind", "0.0.0.0:5000", "app:app" ]
